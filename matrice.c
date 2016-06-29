@@ -84,7 +84,7 @@ void produit_matriciel(matrice a,matrice b,matrice c,Timer *t){
 	startTimer(t); //on lance le timer au début du calcul
 	
     /* calcul de l'élément c(i,j) */
-    #pragma omp parallel for default(none) \
+	  #pragma omp parallel for default(none)		\
 	    shared(a,b,c) private(i,j,k,resultat) 
 	for(i=0; i<taille_matrice(c); i++){
 		for(j=0; j<taille_matrice(c); j++){
