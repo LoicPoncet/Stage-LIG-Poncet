@@ -1,6 +1,6 @@
 #définition des variables
 CC = gcc
-CFLAGS = -Wall -Werror -fopenmp -g
+CFLAGS = -Wall -fopenmp -g
 EXEC=run
 
 
@@ -22,7 +22,7 @@ matrice.o: matrice.c timer.h element.h
 
 #clean
 clean:
-	rm *.o *~
+	rm -rf *.o *~
 
 mrproper: clean
-	rm $(EXEC)
+	rm -rf $(EXEC)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
 #include "timer.h"
 #include "matrice.h"
 
@@ -26,6 +27,10 @@ int main(int argc, char *argv[]){
 
 	n = atoi(argv[1]);
 	run_id = atoi(argv[2]);
+
+
+    srand(time(NULL));
+	
 	
 	/* Allocation de nos matrices */
     a = allocation_matrice(n);
@@ -40,7 +45,7 @@ int main(int argc, char *argv[]){
 	/* on initialise notre timer */
 	t = initialiserTimer();
 
-
+	
 	/* allocation de la matrice résultat */
 	c = allocation_matrice(n);
 
@@ -49,15 +54,17 @@ int main(int argc, char *argv[]){
 		printf("Allocation de la matrice resultat impossible\n");
 		exit(1);
 	}
+
 	
 	/* calcul du produit a*b */
 	produit_matriciel(a,b,c,t);
 		
     /* affichage du temps de calcul dans le fichier résultat */
-	fprintf(fichier, "\n%d;%d;%lg",n,run_id,getTimerValue(t));
+	fprintf(fichier, "%d;%d;%lg\n",n,run_id,getTimerValue(t));
 
 	/* on libère notre timer */
 	freeTimer(t);
+
 
 	/* on libère la matrice résultat */
 	liberer_matrice(c);	

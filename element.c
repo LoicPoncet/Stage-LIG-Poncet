@@ -4,5 +4,5 @@
 
 
 Element randomElement(){
-	return rand();
+	return (rand()%1000);
 }
