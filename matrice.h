@@ -11,13 +11,70 @@
    debut_mem le pointeur vers le premier élément ayant été alloué, debut_mem <= donnees
 */
 typedef struct{
-	int n;
 	Element *donnees;
 	Element *debut_mem;
+	int n;
+	
 }matrice;
 
-/* définition du type bloc pour le produit matriciel récursif */
-typedef matrice bloc;  
+
+
+
+/*************************************************** Partie concernant les matrices par bloc *****************************************/
+
+/* définition du type bloc pour le produit matriciel
+   taille_mat étant la taille de la matrice contenant le bloc */
+typedef struct{
+	Element *donnees;
+	int lignes_bloc,colonnes_bloc,taille_mat;
+}bloc;
+
+
+/* Fonction allouant en mémoire un tableau de blocs et renvoyant un pointeur vers le debut de celui-ci */
+bloc *allocation_tab_blocs(int n);
+
+
+void liberer_blocs(bloc *tab);
+
+
+
+/* Fonction assignant au bloc (i,j) le pointeur vers l'adresse correspondante de la matrice m */
+Element *pointeur_vers_bloc(int taille_bloc,int i,int j, matrice m);
+
+
+
+/* fonction renvoyant le nombre de lignes du bloc b */
+int lignes_bloc(bloc b);
+
+
+/* fonction renvoyant le nombre de colonnes du bloc b */
+int colonnes_bloc(bloc b);
+
+
+
+/* fonction permettant de diviser la matrice m en plusieurs blocs carrés de taille b */
+void diviser_matrice_en_blocs(bloc *tab, int b, matrice m, int nb_blocs_ligne);
+
+
+
+/* fonction renvoyant un pointeur vers l'élément (i,j) du bloc b  */
+Element *acces_bloc(bloc b, int i, int j);
+
+
+
+/* fonction réalisant la multiplication des blocs a et b
+   le résultat est dans le bloc c */
+void mul_blocs(bloc a, bloc b, bloc c);
+
+
+
+/* fonction réalisant le produit par blocs des matrices A et B et mesurant le temps de calcul */
+void produit_matriciel_par_blocs(matrice A,matrice B,matrice C,Timer *t,int b);
+
+
+
+
+/************************************************* fonctions de manipulation de nos matrices ******************************************/
 
 
 /* fonction permettant d'aligner nos matrices sur un multiple de 64 */
@@ -25,9 +82,8 @@ Element *multiple_64(Element *ptr);
 
 
 
-/**************************** fonctions de manipulation de nos matrices *************************/
 
-/*  fonction allouant une matrice de taille nxn en mémoire 
+/*  fonction allouant une matrice linéaire de taille nxn en mémoire 
     et renvoyant cette dernière
 	m.donnees est un multiple de 64
 	si l'allocation n'a pas pu se faire, la fonction renvoie NULL */
@@ -36,6 +92,7 @@ matrice allocation_matrice_alignee(int n);
 
 /* identique à la fonction allocation_matrice_alignee sauf que m.donnees n'est pas forcément un multiple de 64 */
 matrice allocation_matrice(int n);
+
 
 
 /* fonction libérant une matrice précedemment
@@ -63,24 +120,32 @@ void affiche_matrice(matrice m);
 /* assigne une valeur aléatoire à tous les éléments de la matrice m */
 void initialiser_matrice(matrice m);
 
+/* assigne la valeur n à tous les éléments de la matrice m */
+void initialiser_matrice_variable(matrice m,double n);
+
 
 /* Realise la transposée de la matrice m, permet un gain de temps lors du produit matriciel */
 void transpose_matrice(matrice m);
 
 
 
-/***************************** opérations sur les matrices ******************************/
+/* fonction renvoyant 1 si les matrices sont différentes, 0 sinon */
+int comparer_matrice(matrice A, matrice B);
+
+
+
+/******************************************* opérations sur les matrices *************************************************/
+
+
 
 
 /* fonction réalisant le produit matriciel de a avec b et stockant le résultat dans c */
 void produit_matriciel(matrice a,matrice b,matrice c,Timer *t);
 
+
 /* fonction réalisant le produit matriciel de a avec la transposee de b et stockant le résultat dans c */
-void produit_matriciel_transpose(matrice a,matrice b,matrice c,Timer *t);
+void produit_matriciel_transposee(matrice a,matrice b,matrice c,Timer *t);
 
 
-/* fonction réalisant le produit matriciel de a avec b en utilisant un algorithme récursif 
-pré-condition: la taille des matrices de départ doit être une puissance de 2 */
-//void produit_matriciel_recursif(matrice a,matrice b,matrice c);
 
 #endif
