@@ -9,7 +9,7 @@
 
 #ifdef _OPENMP
     #include <omp.h>
-    #define threshold_omp 30 //valeur à partir de laquelle il est plus judicieux d'exécuter le programme en parallèle
+    #define threshold_omp 30 //taille de matrice à partir de laquelle il est plus judicieux d'exécuter le programme en parallèle
 #endif
 
 
@@ -56,7 +56,6 @@ void diviser_matrice_en_blocs(bloc *tab, int b, matrice m,int nb_blocs_ligne){
 			/* on traite les différents cas possibles */
 
 			if(multiple || ((i != nb_blocs_ligne-1) && (j != nb_blocs_ligne-1))){
-				// cas où la taille de nos matrices est un multiple de notre taille de blocs ou bien nous ne sommes pas arrivés à une extrémité de la matrice
 				tab[i*nb_blocs_ligne+j].lignes_bloc = b;
 				tab[i*nb_blocs_ligne+j].colonnes_bloc = b;
 			}
@@ -107,6 +106,22 @@ void mul_blocs(bloc a, bloc b, bloc c){
 			}
 		}
 	}	
+}
+
+
+void mul_blocs_transposee(bloc a, bloc b, bloc c){
+	int i,j,k;
+	Element *ptr;
+
+	/* algorithme transposée */
+	for(i=0; i<lignes_bloc(a); i++){
+		for(j=0; j<colonnes_bloc(b); j++){
+			ptr = acces_bloc(c,i,j);
+			for(k=0; k<colonnes_bloc(a); k++){
+				*ptr += (*acces_bloc(a,i,k))*(*acces_bloc(b,j,k));
+			}
+		}
+	}	
 }	
 
 
@@ -143,6 +158,8 @@ void produit_matriciel_par_blocs(matrice A,matrice B,matrice C,Timer *t,int b){
 		exit(1);
 	}
 
+	transpose_matrice(B);
+	
 	// division de nos matrices en un maximum de blocs de taille b puis si besoin des blocs plus petits
 	diviser_matrice_en_blocs(tab_bloc_a,b,A,nb_blocs_ligne);
 	diviser_matrice_en_blocs(tab_bloc_b,b,B,nb_blocs_ligne);
@@ -151,12 +168,12 @@ void produit_matriciel_par_blocs(matrice A,matrice B,matrice C,Timer *t,int b){
 	startTimer(t); //on lance le timer
 
 	// calcul du bloc (bi,bj) de la matrice résultat
-    #pragma omp parallel for num_threads(8) default(none) schedule(static)	\
+#pragma omp parallel for num_threads(4) default(none) schedule(static) \
 		 shared(tab_bloc_a,tab_bloc_b,tab_bloc_c,nb_blocs_ligne) private(bi,bj,bk)
 	for(bi = 0; bi < nb_blocs_ligne; bi++){
 		for(bj = 0; bj < nb_blocs_ligne; bj++){
 			for(bk = 0; bk < nb_blocs_ligne; bk++){
-				mul_blocs(tab_bloc_a[bi*nb_blocs_ligne+bk], tab_bloc_b[bk*nb_blocs_ligne+bj], tab_bloc_c[bi*nb_blocs_ligne+bj]);
+				mul_blocs_transposee(tab_bloc_a[bi*nb_blocs_ligne+bk], tab_bloc_b[bj*nb_blocs_ligne+bk], tab_bloc_c[bi*nb_blocs_ligne+bj]);
 			}
 		}
 	} // fin de la zone parallèle
@@ -353,6 +370,7 @@ void produit_matriciel(matrice a,matrice b,matrice c,Timer *t){
 	for(i=0; i<taille_matrice(c); i++){
 		for(j=0; j<taille_matrice(c); j++){
 			resultat = acces_matrice(c, i, j);
+			*resultat = 0;
 			for(k=0; k<taille_matrice(c); k++){
 				*resultat += (*acces_matrice(a,i,k))*(*acces_matrice(b,k,j));
 			}
@@ -388,7 +406,7 @@ void produit_matriciel_transposee(matrice a,matrice b,matrice c,Timer *t){
 
 	stopTimer(t); //on arrête le timer à la fin du calcul
 
-	transpose_matrice(b); //on la transpose de nouveau au cas où il y'aurait besoin d'effectué d'autres calculs dessus
+	transpose_matrice(b); //on la transpose de nouveau au cas où il y'aurait besoin d'effecter d'autres calculs dessus
 }
 
 

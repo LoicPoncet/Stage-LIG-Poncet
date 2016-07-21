@@ -28,11 +28,11 @@ int main(int argc, char *argv[]){
 		exit(1);
 	}
 
-	n = atoi(argv[1]); // on récupère la taille des matrices
+	/* récupèration de nos paramètres */
+	n = atoi(argv[1]); 
 	run_id = atoi(argv[2]);
 
-
-    srand(time(NULL));
+	srand(time(NULL)); //initialisation pour Timer
 	
 	
 	/* Allocation de nos matrices */
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
 
 	
 	/* calcul du produit a*b */
-	produit_matriciel_transposee(A,B,C,t);
+	produit_matriciel(A,B,C,t);
 
 	
     /* affichage du temps de calcul dans le fichier résultat */

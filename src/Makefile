@@ -24,12 +24,8 @@ run_blocs.o: run_blocs.c matrice.h timer.h
 matrice.o: matrice.c timer.h element.h
 	$(CC) $(CFLAGS) -c matrice.c
 
-effet_cache: effet_cache.o timer.o
-	$(CC) -o effet_cache effet_cache.o timer.o
 
-effet_cache.o: effet_cache.c timer.h
-	$(CC) -Wall -g -c effet_cache.c
-
+#programme de test
 test: test_algo.o matrice.o timer.o element.o
 	$(CC) -fopenmp -o test test_algo.o matrice.o timer.o element.o -lm
 

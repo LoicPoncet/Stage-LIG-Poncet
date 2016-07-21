@@ -68,6 +68,12 @@ void mul_blocs(bloc a, bloc b, bloc c);
 
 
 
+/* fonction réalisant la multiplication des blocs a et b en utilisant l'algo transposée
+   le résultat est dans le bloc c */
+void mul_blocs_transposee(bloc a, bloc b, bloc c);
+
+
+
 /* fonction réalisant le produit par blocs des matrices A et B et mesurant le temps de calcul */
 void produit_matriciel_par_blocs(matrice A,matrice B,matrice C,Timer *t,int b);
 

@@ -4,7 +4,10 @@
 #include "timer.h"
 
 
-/* Programme permettant de comparer les résultats obtenus avec les différents algos, affiche un message à l'écran si les résultats différent */
+/* 
+   Programme permettant de comparer les résultats obtenus avec les différents algos, affiche un message à l'écran si les résultats diffèrent 
+   Les deux arguments nécessaires sont 1) la taille des matrices; 2) la taille des blocs pour l'algorithme de calcul par blocs. 
+*/
 
 int main(int argc, char *argv[]){
 	int b, n;
@@ -40,7 +43,7 @@ int main(int argc, char *argv[]){
     initialiser_matrice(B);
 
 
-	/* on initialise notre timer */
+	/* on initialise notre timer (obsolète ici) */
 	t = initialiserTimer();
 
 	produit_matriciel(A,B,TEST1,t);
@@ -50,7 +53,7 @@ int main(int argc, char *argv[]){
 	/* calcul du produit a*b */
 	produit_matriciel_par_blocs(A,B,TEST3,t,b);
 
-	if((comparer_matrice(TEST1,TEST2) == 1) || (comparer_matrice(TEST2,TEST3) == 1)){
+	if(comparer_matrice(TEST1,TEST2) || comparer_matrice(TEST2,TEST3)){
 		printf("L'un des algos est incorrect!\n");
 	}	
 
