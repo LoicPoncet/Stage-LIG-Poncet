@@ -36,14 +36,14 @@ int main(int argc, char *argv[]){
 	
 	
 	/* Allocation de nos matrices */
-    A = allocation_matrice_alignee(n);
+    	A = allocation_matrice_alignee(n);
 	B = allocation_matrice_alignee(n);
 	
 	/* initialisation de la matrice a avec des éléments aléatoires */
 	initialiser_matrice(A);
 	
 	/* initialisation de la matrice b avec des éléments aléatoires */
-    initialiser_matrice(B);
+    	initialiser_matrice(B);
 
 
 	/* on initialise notre timer */
@@ -62,10 +62,10 @@ int main(int argc, char *argv[]){
 
 	
 	/* calcul du produit a*b */
-	produit_matriciel(A,B,C,t);
+	produit_matriciel_transposee(A,B,C,t);
 
 	
-    /* affichage du temps de calcul dans le fichier résultat */
+    	/* affichage du temps de calcul dans le fichier résultat */
 	fprintf(fichier, "%d;%d;%lg\n",n,run_id,getTimerValue(t));
 
 	/* on libère notre timer */

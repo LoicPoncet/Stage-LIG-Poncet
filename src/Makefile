@@ -1,5 +1,5 @@
 #définition des variables
-CC = gcc
+CC = gcc -O2
 CFLAGS = -Wall -fopenmp -g
 EXEC=run run_blocs effet_cache test
 
@@ -23,6 +23,7 @@ run_blocs.o: run_blocs.c matrice.h timer.h
 
 matrice.o: matrice.c timer.h element.h
 	$(CC) $(CFLAGS) -c matrice.c
+
 
 
 #programme de test

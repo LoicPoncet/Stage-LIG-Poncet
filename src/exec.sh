@@ -11,6 +11,6 @@ for i in `seq $1 $2 $3`;
 do
 	for j in `seq 1 $4`;
 	do
-		./run $i $j Mesures/$5
+		./run $i $j ~/Stage-LIG-Poncet/Mesures/$5
 	done
 done    

@@ -1,0 +1,152 @@
+%% Impact de la hiérarchie mémoire sur les performances parallèles - Loic Poncet
+%% Rapport rédigé à l'aide de Texmaker
+
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel} 
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} % ajuste la taille des marges
+\usepackage{url} 	  % permet d'ajouter des url
+\usepackage{setspace}
+\usepackage{tgtermes}
+\usepackage{fancyhdr} % permet de changer les en-tête
+\usepackage{graphicx} % permet l'insertion d'images
+\usepackage{titlesec}
+\usepackage{hyperref} % table des matières clicable
+\usepackage{amsmath}  % pour matrices
+\usepackage{textcomp}
+\usepackage{enumitem} % permet de changer le format des listes
+\usepackage{chngcntr} % permet une continuité des notes de bas de page à travers les chapitres
+\usepackage{listings}
+
+%%configuration de listings
+\lstset{
+language=c,
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{black}, %
+keywordstyle=\color{black}, %
+stringstyle=\color{black}, %
+commentstyle=\it\color{green!95!yellow!1}, %
+columns=flexible, %
+tabsize=2, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+breakautoindent=true, %
+captionpos=b
+}
+
+\usepackage{xcolor}
+
+\definecolor{Zgris}{rgb}{0.87,0.85,0.85}
+
+\newsavebox{\BBbox}
+\newenvironment{DDbox}[1]{
+\begin{lrbox}{\BBbox}\begin{minipage}{\linewidth}}
+{\end{minipage}\end{lrbox}\noindent\colorbox{Zgris}{\usebox{\BBbox}} \\
+[.5cm]}
+
+\counterwithout{footnote}{chapter}
+ 
+
+\AddThinSpaceBeforeFootnotes % Permet de mieux respecter les règles de typographie française 
+\FrenchFootnotes % Permet de mieux respecter les règles de typographie française 
+
+\hypersetup{ % gestion des hyperliens
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+
+\titleformat{\chapter}[hang]{\bf\LARGE}{\thechapter}{2pc}{} % change le format des titres de chapitres
+
+\titleformat{\section}[hang]{\bf\Large}{\thesection}{2pc}{} %change le format des titres de sections
+
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+\pagestyle{fancy} % modifie le style des pages
+\renewcommand\headrulewidth{1pt}
+\fancyhead[L]{}
+\fancyhead[R]{\textit{Impact de la hiérarchie mémoire sur les performances parallèles}}
+
+\fancypagestyle{plain}{}
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+	\begin{flushright} % logo UGA
+		\includegraphics[scale=0.8]{logo-uga.png}\\[1.5cm]
+	\end{flushright}
+	\large{Université Grenoble Alpes\\
+		   Département Licence Sciences \& Technologie\\[1.5cm]}
+	
+	\textbf{\LARGE{RAPPORT DE STAGE\\}}
+	
+	% titre du rapport
+	\rule{\linewidth}{0.5mm} \\[0.4cm]
+	\textbf{\LARGE{Impact de la hiérarchie mémoire sur les performances parallèles}}\\[0.4cm]
+	\rule{\linewidth}{0.5mm} \\[0.4cm]
+	
+	\textbf{\textit{	PONCET Loic\\[0.8cm]}}
+	\includegraphics[scale=0.15]{LIG_coul.jpg}\\[0.8cm] % logo LIG
+\end{center}
+
+\begin{flushleft}
+	Laboratoire d'accueil : Laboratoire d'Informatique de Grenoble\\
+	Directeur du laboratoire : Eric Gaussier\\
+	Responsable du stage : Guillaume Huard\\[1.0cm]
+\end{flushleft}
+
+\begin{flushright}
+	Licence Sciences et Technologie 2\up{ème} année - Mathématiques et 		Informatique\\
+	Année Universitaire : 2015/2016
+\end{flushright}
+
+\end{titlepage}
+
+\pagenumbering{roman}
+
+\begin{onehalfspace}
+
+\chapter*{Remerciements}
+
+Tout d'abord, j'adresse mes remerciements à l'Université Grenoble Alpes ainsi qu'au Laboratoire d'Informatique de Grenoble qui m'ont permis d'effectuer ce stage.\\
+
+Je remercie Guillaume Huard, mon maître de stage, pour m'avoir donné ma chance et pour avoir toujours répondu présent lorsque j'avais besoin de ses conseils. Sa gentillesse, la confiance qu'il m'a accordée ainsi que le savoir qu'il m'a transmis pendant ces 6 semaines ont grandement contribué à la réussite sur le plan personnel de ce stage.\\
+
+Mes remerciements vont également à Orianne Soto ainsi qu'à Annie Simon pour avoir géré les parties administratives de mon stage.\\
+
+Enfin, j'exprime toute ma gratitude envers toutes les personnes avec qui j'ai pu collaboré au sein du LIG, en particulier à:
+\begin{itemize}[label=\textbullet]
+\item Michael Picard, autre stagiaire d'excellence, pour l'aide qu'il m'a apportée ainsi que pour avoir partagé avec moi ce qu'il avait appris au cours de son stage,
+\item l'ensemble des chercheurs des équipes POLARIS et DATAMOVE,
+\item Lucas, Mathieu, Piat et Thomas avec qui j'ai partagé le bureau 424, qui m'ont accueilli chaleureusement et qui n'ont pas hésité à donner de leur temps pour m'aider et me faire découvrir des outils que je ne maîtrisais pas.
+\end{itemize} 
+
+\renewcommand\contentsname{\bf\hfill Table des matières \hfill}
+\tableofcontents
+
+\pagestyle{fancy}
+
+	
+
+\include{1-introduction}    
+\include{2-chapitre1}
+\include{3-chapitre2}
+
+\end{onehalfspace}
+
+\bibliographystyle{unsrt}
+\bibliography{biblio}
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+
+\end{document}

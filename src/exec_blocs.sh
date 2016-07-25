@@ -12,6 +12,6 @@ for ((i = $2; i <= $4; i += $3));
 do
 	for j in `seq 1 $5`;
 	do
-		./run_blocs $1 $i $j Mesures/$6
+		./run_blocs $1 $i $j ~/Stage-LIG-Poncet/Mesures/Blocs/$6
 	done
 done    

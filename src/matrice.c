@@ -392,7 +392,7 @@ void produit_matriciel_transposee(matrice a,matrice b,matrice c,Timer *t){
 
      /* calcul de l'élément c(i,j) */
      #pragma omp parallel for if(taille_matrice(c) > threshold_omp) \
-	    default(none) schedule(static) \
+	    default(none) schedule(dynamic) \
 	    shared(a,b,c) private(i,j,k,resultat) 
 	for(i=0; i<taille_matrice(c); i++){
 		for(j=0; j<taille_matrice(c); j++){
