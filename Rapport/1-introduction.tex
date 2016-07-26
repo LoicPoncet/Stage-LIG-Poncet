@@ -1,0 +1,39 @@
+\chapter{Introduction}
+
+\pagenumbering{arabic}
+
+\section{Environnement}
+
+J'ai été accueilli durant ces six semaines de stage au Laboratoire d'Informatique de Grenoble (LIG). Le LIG est l'un des principaux laboratoires de recherche en informatique de Grenoble, il contribue au développement des sciences informatiques et tente de relever les défis technologiques d'aujourd'hui et de demain.\\
+
+Mon stage s'est déroulé au sein de l'équipe POLARIS, l'une des 24 équipes de recherche du LIG\footnote{\url{https://www.liglab.fr/presentation/equipes}},  dont le projet est d'étudier les performances des très grands systèmes distribués à travers des simulations, des modélisations ou encore des optimisations d'algorithmes adaptés. De ce fait, j'ai pu bénéficier des connaissances des membres de l'équipe dans le domaine du calcul parallèle, mais également sur les impacts de la hiérarchie mémoire sur les performances.\\
+
+L'ensemble des résultats présentés dans ce document ont été obtenu avec la configuration suivante (en résumé):
+
+\begin{center}
+\begin{tabular}{|c|}
+\hline
+	HP\textsuperscript\textregistered Z800 Workstation \\
+	Processeur Intel\textsuperscript\textregistered Xeon\textsuperscript\textregistered  		E5620 2.40GHz \cite{proc}\\
+	Hyper-threading désactivé\\
+	Compilateur GCC version 5.3.1 \\
+\hline
+\end{tabular}
+\end{center}
+
+Pour plus d'informations sur ma configuration ainsi que sur les paquets installés sur ma machine voir le dépôt Github du stage: \url{https://github.com/LoicPoncet/Stage-LIG-Poncet}
+
+\section{Présentation du sujet et motivations}
+
+L'intitulé exact de mon sujet de recherche est: \textbf{\textit{"Impact de la hiérarchie mémoire sur les performances parallèles"}}. Un sujet portant à la foi sur l'architecture des ordinateurs mais également sur le parallélisme en informatique. 
+
+\subsection{Qu'est-ce que le parallélisme?}
+On désigne par parallélisme le fait de réaliser plusieurs calculs simultanément sur un ordinateur, cela nécessite une machine possédant plusieurs coeurs, ou bien plusieurs processeurs. Ainsi, lorsqu'un programme s'exécute en parallèle, différentes portions du code, ou bien différents calculs pourront être exécutés au même moment.\\ 
+
+Le parallélisme s'est développé pour répondre à deux besoin bien spécifiques: améliorer la puissance de calcul des ordinateurs et réduire leurs coût \cite{ref2}.
+
+Il s'agit d'une notion au combien importante aujourd'hui dans le domaine de l'informatique. Les calculs réalisés en parallèle permettent un gain de performances considérable par rapport aux calculs effectués de manière classique, si bien qu'ils sont aujourd'hui utilisés dans bon nombre de domaines.
+
+\section{Structure du rapport}
+
+Ce rapport sera divisé en deux grandes parties. La première explicitera l'importance de la gestion de la mémoire dans un programme et son impact sur les performances. Cette partie sera plus "technique" et permettra d'introduire certaines notions importantes pour la suite. La deuxième partie sera la partie centrale de ce rapport. Elle traitera du calcul parallèle, mon apprentissage de celui-ci et reprendra les grandes idées de la première partie en les appliquant aux architectures parallèles. 
